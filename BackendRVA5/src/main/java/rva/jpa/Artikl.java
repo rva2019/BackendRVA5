@@ -48,7 +48,7 @@ public class Artikl implements Serializable {
 
 	public void setNaziv(String naziv) {
 		this.naziv = naziv;
-	}
+	} 
 
 	public String getProizvodjac() {
 		return this.proizvodjac;
