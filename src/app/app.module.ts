@@ -33,6 +33,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { ArtiklService } from './services/artikl.service';
 import { ArtiklDialogComponent } from './components/dialogs/artikl-dialog/artikl-dialog.component';
 import { FormsModule } from '@angular/forms';
+import { DobavljacDialogComponent } from './components/dialogs/dobavljac-dialog/dobavljac-dialog.component';
+import { DobavljacService } from './services/dobavljac.service';
 
 const Routes = [
   { path: 'artikl', component: ArtiklComponent },
@@ -57,7 +59,8 @@ const Routes = [
     DobavljacComponent,
     PorudzbinaComponent,
     StavkaPorudzbineComponent,
-    ArtiklDialogComponent
+    ArtiklDialogComponent,
+    DobavljacDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -80,9 +83,9 @@ const Routes = [
     RouterModule.forRoot(Routes)
   ],
   entryComponents: [
-    ArtiklDialogComponent
+    ArtiklDialogComponent, DobavljacDialogComponent
   ],
-  providers: [ArtiklService],
+  providers: [ArtiklService, DobavljacService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
