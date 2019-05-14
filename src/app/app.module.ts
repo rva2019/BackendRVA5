@@ -9,7 +9,10 @@ import {MatButtonModule,
         MatToolbarModule, 
         MatTableModule, 
         MatSelectModule, 
-        MatOptionModule} 
+        MatOptionModule,
+        MatSnackBarModule,
+        MatDialogModule,
+        MatInputModule} 
   from '@angular/material';
 
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -28,6 +31,8 @@ import { StavkaPorudzbineComponent } from './components/stavka-porudzbine/stavka
 import { RouterModule, Routes } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { ArtiklService } from './services/artikl.service';
+import { ArtiklDialogComponent } from './components/dialogs/artikl-dialog/artikl-dialog.component';
+import { FormsModule } from '@angular/forms';
 
 const Routes = [
   { path: 'artikl', component: ArtiklComponent },
@@ -51,7 +56,8 @@ const Routes = [
     ArtiklComponent,
     DobavljacComponent,
     PorudzbinaComponent,
-    StavkaPorudzbineComponent
+    StavkaPorudzbineComponent,
+    ArtiklDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -67,7 +73,14 @@ const Routes = [
     MatSelectModule,
     MatOptionModule,
     HttpClientModule,
+    MatSnackBarModule,
+    MatDialogModule,
+    MatInputModule,
+    FormsModule,
     RouterModule.forRoot(Routes)
+  ],
+  entryComponents: [
+    ArtiklDialogComponent
   ],
   providers: [ArtiklService],
   bootstrap: [AppComponent]
