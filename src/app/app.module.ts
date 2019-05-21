@@ -12,7 +12,10 @@ import {MatButtonModule,
         MatOptionModule,
         MatSnackBarModule,
         MatDialogModule,
-        MatInputModule} 
+        MatInputModule,
+        MatNativeDateModule,
+        MatDatepickerModule,
+        MatCheckboxModule} 
   from '@angular/material';
 
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -35,6 +38,8 @@ import { ArtiklDialogComponent } from './components/dialogs/artikl-dialog/artikl
 import { FormsModule } from '@angular/forms';
 import { DobavljacDialogComponent } from './components/dialogs/dobavljac-dialog/dobavljac-dialog.component';
 import { DobavljacService } from './services/dobavljac.service';
+import { PorudzbinaDialogComponent } from './components/dialogs/porudzbina-dialog/porudzbina-dialog.component';
+import { PorudzbinaService } from './services/porudzbina.service';
 
 const Routes = [
   { path: 'artikl', component: ArtiklComponent },
@@ -60,7 +65,8 @@ const Routes = [
     PorudzbinaComponent,
     StavkaPorudzbineComponent,
     ArtiklDialogComponent,
-    DobavljacDialogComponent
+    DobavljacDialogComponent,
+    PorudzbinaDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -80,12 +86,15 @@ const Routes = [
     MatDialogModule,
     MatInputModule,
     FormsModule,
+    MatDatepickerModule,
+    MatCheckboxModule,
+    MatNativeDateModule,
     RouterModule.forRoot(Routes)
   ],
   entryComponents: [
-    ArtiklDialogComponent, DobavljacDialogComponent
+    ArtiklDialogComponent, DobavljacDialogComponent, PorudzbinaDialogComponent
   ],
-  providers: [ArtiklService, DobavljacService],
+  providers: [ArtiklService, DobavljacService, PorudzbinaService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
