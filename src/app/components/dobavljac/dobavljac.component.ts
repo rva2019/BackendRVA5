@@ -13,48 +13,41 @@ import { DobavljacDialogComponent } from '../dialogs/dobavljac-dialog/dobavljac-
 })
 export class DobavljacComponent implements OnInit {
 
-  displayedColumns = ['id', 'naziv', 'adresa', 'kontakt', 'actions'];
+  displayedColumns = ['id', 'adresa', 'naziv', 'kontakt', 'actions'];
   dataSource: MatTableDataSource<Dobavljac>;
+
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  
-  constructor(public httpClient: HttpClient,
-              public dialog: MatDialog,
-              public dobavljacService: DobavljacService) {
-  }
+
+
+  constructor(public dobavljacService: DobavljacService, public dialog: MatDialog) { }
 
   ngOnInit() {
     this.loadData();
   }
 
   public loadData() {
-    this.dobavljacService.getAllDobavljac().subscribe(data => {
+    this.dobavljacService.getAllDobavljac().subscribe(data =>{
       this.dataSource = new MatTableDataSource(data);
-
-      this.dataSource.sortingDataAccessor = (data, property) => {
-        switch (property) {
-          case 'id': return data[property];
-          default: return data[property].toLocaleLowerCase();
-        }
-      };
 
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
-    })
-  }
+    });
+}
 
-  applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-    this.dataSource.filter = filterValue;
-  }
-  public openDialog(flag: number, id: number, naziv: string, adresa: string, kontakt: string) {
-    const dialogRef = this.dialog.open(DobavljacDialogComponent, 
-                      { data: { id: id, naziv: naziv, adresa: adresa, kontakt: kontakt } });
+  public openDialog(flag: number, id: number, adresa: string, naziv: string, kontakt: string) {
+    const dialogRef = this.dialog.open(DobavljacDialogComponent, { data: { id: id, adresa: adresa, naziv: naziv, kontakt: kontakt } });
     dialogRef.componentInstance.flag = flag;
     dialogRef.afterClosed().subscribe(result => {
       if (result == 1)
         this.loadData();
     });
+  }
+
+  applyFilter(filterValue: string){
+    filterValue = filterValue.trim();
+    filterValue = filterValue.toLocaleLowerCase();
+    this.dataSource.filter = filterValue;
   }
 
 }

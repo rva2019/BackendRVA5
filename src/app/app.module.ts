@@ -1,14 +1,14 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import {MatButtonModule, 
-        MatListModule, 
-        MatIconModule, 
-        MatGridListModule, 
-        MatSidenavModule, 
-        MatExpansionModule, 
-        MatToolbarModule, 
-        MatTableModule, 
-        MatSelectModule, 
+import {MatButtonModule,
+        MatListModule,
+        MatIconModule,
+        MatGridListModule,
+        MatSidenavModule,
+        MatExpansionModule,
+        MatToolbarModule,
+        MatTableModule,
+        MatSelectModule,
         MatOptionModule,
         MatSnackBarModule,
         MatDialogModule,
@@ -16,7 +16,8 @@ import {MatButtonModule,
         MatNativeDateModule,
         MatDatepickerModule,
         MatCheckboxModule,
-        MatPaginatorModule} 
+        MatPaginatorModule,
+        MatSortModule}
   from '@angular/material';
 
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -94,16 +95,17 @@ const Routes = [
     MatCheckboxModule,
     MatNativeDateModule,
     MatPaginatorModule,
+    MatSortModule,
     RouterModule.forRoot(Routes)
   ],
   entryComponents: [
-    ArtiklDialogComponent, 
-    DobavljacDialogComponent, 
+    ArtiklDialogComponent,
+    DobavljacDialogComponent,
     PorudzbinaDialogComponent,
     StavkaPorudzbineDialogComponent
   ],
-  providers: [ArtiklService, 
-              DobavljacService, 
+  providers: [ArtiklService,
+              DobavljacService,
               PorudzbinaService,
               StavkaPorudzbineService],
   bootstrap: [AppComponent]

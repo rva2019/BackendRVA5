@@ -14,18 +14,19 @@ import { StavkaPorudzbineDialogComponent } from '../dialogs/stavka-porudzbine-di
 })
 export class StavkaPorudzbineComponent implements OnInit {
 
-  displayedColumns = ['id', 'redniBroj', 'kolicina', 'jedinicaMere', 'cena', 'porudzbina',
-                      'artikl', 'actions'];
+  displayedColumns = ['id', 'redniBroj', 'kolicina', 'jedinicaMere', 'cena', 'porudzbina', 'artikl', 'actions'];
   dataSource: MatTableDataSource<StavkaPorudzbine>;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
 
   @Input() selektovanaPorudzbina: Porudzbina;
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
 
   constructor(public stavkaPorudzbineService: StavkaPorudzbineService,
               public dialog: MatDialog) { }
 
   ngOnInit() {
+
   }
 
   ngOnChanges() {
@@ -36,51 +37,54 @@ export class StavkaPorudzbineComponent implements OnInit {
 
   public loadData() {
     this.stavkaPorudzbineService.getStavkeZaPorudzbinu(this.selektovanaPorudzbina.id)
-    .subscribe(data => {
+  .subscribe(data => {
       this.dataSource = new MatTableDataSource(data);
       //pretraga po nazivu ugnježdenog objekta
       this.dataSource.filterPredicate = (data, filter: string) => {
         const accumulator = (currentTerm, key) => {
-          return key === 'artikl' ? currentTerm + data.artikl.naziv : currentTerm +
-          data[key];
+          return key === 'artikl' ? currentTerm + data.artikl.naziv : currentTerm + data[key];
         };
         const dataStr = Object.keys(data).reduce(accumulator, '').toLowerCase();
         const transformedFilter = filter.trim().toLowerCase();
         return dataStr.indexOf(transformedFilter) !== -1;
-     };
+      };
 
-      //sortiranje po nazivu ugnježdenog objekta
-      this.dataSource.sortingDataAccessor = (data, property) => {
-       switch(property) {
-         case 'artikl': return data.artikl.naziv.toLocaleLowerCase();
-         default: return data[property];
-       }
-     };
+        //sortiranje po nazivu ugnježdenog objekta
+        this.dataSource.sortingDataAccessor = (data, property) => {
+        switch(property) {
+          case 'artikl': return data.artikl.naziv.toLocaleLowerCase();
+          default: return data[property];
+        }
+      };
 
-     this.dataSource.paginator = this.paginator;
-     this.dataSource.sort = this.sort;
-   });
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    });
 
   }
 
-  public openDialog(flag: number, id: number, redniBroj: number, kolicina: number,
-                    jedinicaMere: number, cena: number, porudzbina: Porudzbina, 
-                    artikl: Artikl) {
-      const dialogRef = this.dialog.open(StavkaPorudzbineDialogComponent, {
-        data : {
-          i: id, id: id, redniBroj: redniBroj, kolicina: kolicina, 
-          jedinicaMere: jedinicaMere, cena: cena, porudzbina: porudzbina, artikl: artikl
-        }
-      });
+  public openDialog(flag: number, id: number, redniBroj: number, kolicina: number, jedinicaMere: number,
+    cena: number, porudzbina: Porudzbina, artikl: Artikl) {
+    const dialogRef = this.dialog.open(StavkaPorudzbineDialogComponent, {
+      data: {
+        i: id, id: id, redniBroj: redniBroj, kolicina: kolicina, jedinicaMere: jedinicaMere,
+        cena: cena, porudzbina: porudzbina, artikl: artikl
+      }
+    });
+    dialogRef.componentInstance.flag = flag;
+    if (flag == 1)
+      dialogRef.componentInstance.data.porudzbina = this.selektovanaPorudzbina;
 
-      dialogRef.componentInstance.flag = flag;
-      if(flag == 1)
-        dialogRef.componentInstance.data.porudzbina = this.selektovanaPorudzbina;
+    dialogRef.afterClosed().subscribe(result => {
+      if (result == 1)
+        this.loadData();
+    });
+  }
 
-      dialogRef.afterClosed().subscribe(result => {
-        if(result == 1)
-          this.loadData();
-      });
+  applyFilter(filterValue: string){
+    filterValue = filterValue.trim();
+    filterValue = filterValue.toLocaleLowerCase();
+    this.dataSource.filter = filterValue;
   }
 
 }
